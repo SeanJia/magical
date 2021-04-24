@@ -31,7 +31,7 @@ setup(name='magical-il',
       packages=find_packages(),
       install_requires=[
           'pymunk~=5.6.0',
-          'pyglet==1.5.*',
+          'pyglet==1.5.0',
           'gym==0.17.*',
           'Click>=7.0',
           'numpy>=1.17.4',
