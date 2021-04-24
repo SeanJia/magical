@@ -60,8 +60,8 @@ class MoveToCornerEnv(BaseEnv, EzPickle):
                 self.rng,
                 rand_pos=True,
                 rand_rot=True,
-                rel_pos_linf_limits=self.JITTER_POS_BOUND,
-                rel_rot_limits=self.JITTER_ROT_BOUND)
+                rel_pos_linf_limits=None, #self.JITTER_POS_BOUND,
+                rel_rot_limits=None) #self.JITTER_ROT_BOUND)
 
     def score_on_end_of_traj(self):
         robot_pos = np.asarray(self.__shape_ref.shape_body.position)
@@ -75,17 +75,22 @@ class MoveToCornerEnv(BaseEnv, EzPickle):
         return score
     
     def reward(self):
-        robot_pos = np.asarray(self.__shape_ref.shape_body.position)
-        dist1 = np.linalg.norm(np.asarray([-1.0, 1.0]) - robot_pos)
-        dist2 = np.linalg.norm(np.asarray([1.0, -1.0]) - robot_pos)
-        dist3 = np.linalg.norm(np.asarray([1.0, 1.0]) - robot_pos)
-        dist4 = np.linalg.norm(np.asarray([-1.0, -1.0]) - robot_pos)
+        shape_pos = np.asarray(self.__shape_ref.shape_body.position)
+        robot_pos = np.asarray(self._robot.robot_body.position)
+        dist1 = np.linalg.norm(np.asarray([-1.0, 1.0]) - shape_pos)
+        dist2 = np.linalg.norm(np.asarray([1.0, -1.0]) - shape_pos)
+        dist3 = np.linalg.norm(np.asarray([1.0, 1.0]) - shape_pos)
+        dist4 = np.linalg.norm(np.asarray([-1.0, -1.0]) - shape_pos)
         succeed_dist = 0.7
+        reach_dist = 0.7
         score1 = max(0.0, succeed_dist - dist1) / succeed_dist
         score2 = max(0.0, succeed_dist - dist2) / succeed_dist
         score3 = max(0.0, succeed_dist - dist3) / succeed_dist
         score4 = max(0.0, succeed_dist - dist4) / succeed_dist
-        score = float(max(score1, score2, score3, score4))
+        score = max(score1, score2, score3, score4)
+        dist = np.linalg.norm(robot_pos - shape_pos)
+        score += 0.2 * max(0.0, reach_dist - dist) / reach_dist
+        score = float(min(1.0, score))
         assert 0 <= score <= 1
         return score
 
