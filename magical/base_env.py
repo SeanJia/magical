@@ -49,10 +49,12 @@ def ez_init(*args, **kwargs):
 class PhysicsVariables(PhysicsVariablesBase):
     """Default values & randomisation ranges for key physical parameters of the
     environment."""
-    # robot_pos_joint_max_force = PhysVar(3, (2.5, 4))
-    robot_pos_joint_max_force = PhysVar(3, (2.2, 3.5))
-    robot_rot_joint_max_force = PhysVar(1, (0.7, 1.5))
-    robot_finger_max_force = PhysVar(4, (2.5, 4.5))
+    #robot_pos_joint_max_force = PhysVar(3, (2.2, 3.5))
+    #robot_rot_joint_max_force = PhysVar(1, (0.7, 1.5))
+    #robot_finger_max_force = PhysVar(4, (2.5, 4.5))
+    robot_pos_joint_max_force = PhysVar(3, (3, 3))
+    robot_rot_joint_max_force = PhysVar(1, (1, 1))
+    robot_finger_max_force = PhysVar(4, (4, 4))
     shape_trans_joint_max_force = PhysVar(1.5, (1.0, 1.8))
     shape_rot_joint_max_force = PhysVar(0.1, (0.07, 0.15))
 
