@@ -91,7 +91,7 @@ class MoveToCornerEnv(BaseEnv, EzPickle):
 
     def step(self, *args, **kwargs):
         obs, rew, done, info = super().step(*args, **kwargs)
-        reward = self.reward()
+        rew = self.reward()
         return obs, rew, done, info
 
     def debug_shaped_reward(self):
