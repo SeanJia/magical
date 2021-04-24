@@ -73,12 +73,25 @@ class MoveToCornerEnv(BaseEnv, EzPickle):
         score = min(1.0, max(0.0, furthest_dist - dist) / drange)
         assert 0 <= score <= 1
         return score
+    
+    def reward(self):
+        robot_pos = np.asarray(self.__shape_ref.shape_body.position)
+        dist1 = np.linalg.norm(np.asarray([-1.0, 1.0]) - robot_pos)
+        dist2 = np.linalg.norm(np.asarray([1.0, -1.0]) - robot_pos)
+        dist3 = np.linalg.norm(np.asarray([1.0, 1.0]) - robot_pos)
+        dist4 = np.linalg.norm(np.asarray([-1.0, -1.0]) - robot_pos)
+        succeed_dist = 1
+        score1 = max(0.0, succeed_dist - dist1) / succeed_dist
+        score2 = max(0.0, succeed_dist - dist2) / succeed_dist
+        score3 = max(0.0, succeed_dist - dist3) / succeed_dist
+        score4 = max(0.0, succeed_dist - dist4) / succeed_dist
+        score = float(max(score1, score2, score3, score4))
+        assert 0 <= score <= 1
+        return score
 
     def step(self, *args, **kwargs):
         obs, rew, done, info = super().step(*args, **kwargs)
-        if self.debug_reward:
-            # dense reward for training RL
-            rew = self.debug_shaped_reward()
+        reward = self.reward()
         return obs, rew, done, info
 
     def debug_shaped_reward(self):
