@@ -80,7 +80,7 @@ class MoveToCornerEnv(BaseEnv, EzPickle):
         dist2 = np.linalg.norm(np.asarray([1.0, -1.0]) - robot_pos)
         dist3 = np.linalg.norm(np.asarray([1.0, 1.0]) - robot_pos)
         dist4 = np.linalg.norm(np.asarray([-1.0, -1.0]) - robot_pos)
-        succeed_dist = 1
+        succeed_dist = 0.7
         score1 = max(0.0, succeed_dist - dist1) / succeed_dist
         score2 = max(0.0, succeed_dist - dist2) / succeed_dist
         score3 = max(0.0, succeed_dist - dist3) / succeed_dist
