@@ -404,7 +404,7 @@ def register_envs():
                          phys_iter=10)
 
     # remember 100 frames is ~12.5s at 8fps
-    mtc_ep_len = 70
+    mtc_ep_len = 80
     move_to_corner_variants = [
         ('magical.benchmarks.move_to_corner:MoveToCornerEnv',
          'MoveToCorner-Demo-v0', mtc_ep_len, {
